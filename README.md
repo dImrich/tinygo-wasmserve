@@ -20,6 +20,8 @@ Usage of tinygo-wasmserve
         HTTP bind address to serve (default ":8080")
   -tags string
         Build tags
+  -no-debug bool
+        Disable outputting debug symbols. Avoiding debug symbols can have a big impact on generated binary size, reducing them by more than half.
 ```
 
 ## Example

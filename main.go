@@ -35,6 +35,7 @@ var (
 	flagHTTP        = flag.String("http", ":8080", "HTTP bind address to serve")
 	flagTags        = flag.String("tags", "", "Build tags")
 	flagAllowOrigin = flag.String("allow-origin", "", "Allow specified origin (or * for all origins) to make requests to this server")
+	flagNoDebug 	= flag.Bool("no-debug", false, "Disable outputting debug symbols. Avoiding debug symbols can have a big impact on generated binary size, reducing them by more than half.")
 )
 
 var tmpOutputDir = ""
@@ -109,6 +110,9 @@ func handle(w http.ResponseWriter, r *http.Request) {
 		}
 		// tinygo build -o main.wasm -target wasm .
 		args := []string{"build", "-o", filepath.Join(output, "main.wasm"), "-target", "wasm"}
+		if *flagNoDebug {
+			args = append(args, "-no-debug")
+		}
 		if *flagTags != "" {
 			args = append(args, "-tags", *flagTags)
 		}
